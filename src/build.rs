@@ -3,7 +3,7 @@ use std::{
     process::Command
 };
 
-const FRONTEND_DIR: &str = "../ui";
+const FRONTEND_DIR: &str = "../rustystack-ui";
 
 fn build_frontend<P: AsRef<Path>>(source: P) {
     Command::new("trunk")
