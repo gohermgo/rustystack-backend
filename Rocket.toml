@@ -1,4 +1,3 @@
 [global]
 address = "147.182.247.223"
 port = 80
-log = "debug"
