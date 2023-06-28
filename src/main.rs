@@ -10,7 +10,7 @@ use std::path::PathBuf;
 
 // Return the index file as a Rocket NamedFile
 async fn get_index() -> Result<NamedFile, NotFound<String>> {
-    NamedFile::open("../ui/dist/index.html")
+    NamedFile::open("../rustystack-ui/dist/index.html")
         .await
         .map_err(|e| NotFound(e.to_string()))
 }
@@ -20,7 +20,7 @@ async fn get_index() -> Result<NamedFile, NotFound<String>> {
 // So i will probably think of something better later
 #[get("/<path..>")]
 async fn static_files(path: PathBuf) -> Result<NamedFile, NotFound<String>> {
-    let path = PathBuf::from("../ui/dist").join(path);
+    let path = PathBuf::from("../rustystack-ui/dist").join(path);
     match NamedFile::open(path).await {
         Ok(f) => Ok(f),
         Err(_) => get_index().await,
