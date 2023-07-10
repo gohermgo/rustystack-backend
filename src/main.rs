@@ -8,36 +8,11 @@
 //     fs::NamedFile,
 //     response::status::NotFound
 // };
-use actix_web::{web, App, HttpServer};
-use rustystack_backend::run;
-use std::path::PathBuf;
-
-#[cfg(test)]
-mod greet_tests {
-    use actix_web::{body::MessageBody, test, web, HttpRequest, HttpResponse, Responder};
-    use std::boxed::Box;
-
-    #[tokio::test]
-    async fn greet_parameterized() {
-        let req = test::TestRequest::get()
-            .uri("/greet/Steve")
-            .param("name", "Steve")
-            .to_http_request();
-        let res = greet(req).await.body();
-        assert_eq!(String::from("Hello Steve!").boxed(), res);
-    }
-
-    #[tokio::test]
-    async fn greet_blank() {
-        let req = test::TestRequest::get().uri("/greet").to_http_request();
-        let res = greet(req).await;
-        assert_eq!("Hello world!", res);
-    }
-}
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    run().await
+    let listener = std::net::TcpListener::bind(format!("{}:8000", rustystack_backend::PUBLIC_IP))?;
+    rustystack_backend::run(listener)?.await
 }
 
 // Return the index file as a Rocket NamedFile
